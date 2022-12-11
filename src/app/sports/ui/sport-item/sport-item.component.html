@@ -1,0 +1,10 @@
+<ng-container *ngIf="sport">
+  <mat-card class="sport-item-card" (click)="onSelect(sport.idSport)">
+    <img mat-card-image [src]="sport.strSportThumb" [alt]="sport.strSport" />
+    <mat-card-content>
+      <p>{{ sport.strSport }}</p>
+
+      <p class="line-clamp">{{ sport.strSportDescription }}</p>
+    </mat-card-content>
+  </mat-card>
+</ng-container>

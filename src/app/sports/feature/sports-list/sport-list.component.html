@@ -1,0 +1,3 @@
+<div *ngIf="sports$ | async" class="sports-list-container">
+  <app-sport-item *ngFor="let sport of sports$ | async" [sport]="sport"></app-sport-item>
+</div>
