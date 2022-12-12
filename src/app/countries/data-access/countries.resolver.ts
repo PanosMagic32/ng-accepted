@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 import { SportsDBAPIService } from '@shared/data-access/sports-db.service';
 
 @Injectable({ providedIn: 'root' })
-export class SportsResolver implements Resolve<boolean> {
+export class CountriesResolver implements Resolve<boolean> {
   sportsDBAPIService = inject(SportsDBAPIService);
 
   resolve(): Observable<boolean> {
-    return this.sportsDBAPIService.fetchSports();
+    return this.sportsDBAPIService.fetchCountries();
   }
 }

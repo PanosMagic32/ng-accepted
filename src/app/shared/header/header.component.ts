@@ -5,7 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { ThemeToggleService } from '@shared/data-access/theme-toggle.service';
+import { ThemeToggleService } from '../data-access/theme.service';
 
 @Component({
   selector: 'app-header',
