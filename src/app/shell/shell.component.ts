@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { Router, RouterModule, Event as NavigationEvent, NavigationEnd } from '@angular/router';
 import { debounceTime, Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { SportsDBAPIService } from '@shared/data-access/sports-db.service';
 
-import { SelectOptions } from './data-access/select-options.interface';
+import { SelectOption } from './data-access/select-option.interface';
 
 @Component({
   selector: 'app-shell',
@@ -79,11 +79,10 @@ import { SelectOptions } from './data-access/select-options.interface';
 export class ShellComponent implements OnDestroy {
   private subscriptions: Subscription[] = [];
 
-  private fb = inject(FormBuilder);
   private router = inject(Router);
   private sportsDBApiService = inject(SportsDBAPIService);
 
-  categoryOptions: SelectOptions[] = [
+  categoryOptions: SelectOption[] = [
     { value: 'sports', label: 'Sports' },
     { value: 'leagues', label: 'Leagues' },
     { value: 'countries', label: 'Countries' },
@@ -92,10 +91,12 @@ export class ShellComponent implements OnDestroy {
   selectionForm: FormGroup;
 
   constructor() {
-    this.selectionForm = this.fb.group({
-      query: '',
-      category: '',
+    this.selectionForm = new FormGroup({
+      query: new FormControl(''),
+      category: new FormControl(this.categoryOptions[0]),
     });
+
+    this.router.navigate(['/', 'sports']);
 
     this.subscriptions.push(
       this.router.events.subscribe((event: NavigationEvent) => {
@@ -108,7 +109,7 @@ export class ShellComponent implements OnDestroy {
     this.subscriptions.push(
       this.selectionForm.valueChanges.pipe(debounceTime(500)).subscribe((query) => {
         console.log(query);
-        this.sportsDBApiService.fetchSports(query).subscribe();
+        // this.sportsDBApiService.fetchSports(query).subscribe();
       })
     );
 

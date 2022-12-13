@@ -1,16 +1,18 @@
 import { NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 
 import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Sport } from '@shared/data-access/sport.interface';
+import { DetailDialogComponent } from '@shared/detail-dialog/detail-dialog.component';
 
 @Component({
   selector: 'app-sport-item',
   standalone: true,
   template: `
     <ng-container *ngIf="sport">
-      <mat-card class="sport-item-card" (click)="onSelect(sport.idSport)">
+      <mat-card class="sport-item-card" (click)="onSelect(sport)">
         <img mat-card-image [src]="sport.strSportThumb" [alt]="sport.strSport" />
         <mat-card-content>
           <p>{{ sport.strSport }}</p>
@@ -43,7 +45,11 @@ import { Sport } from '@shared/data-access/sport.interface';
 export class SportItemComponent {
   @Input() sport!: Sport;
 
-  onSelect(sportId: string) {
-    console.log(sportId);
+  private dialog = inject(MatDialog);
+
+  async onSelect(sport: Sport) {
+    this.dialog.open(DetailDialogComponent, {
+      data: sport,
+    });
   }
 }
