@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
-import { Router, RouterModule, Event as NavigationEvent, NavigationEnd } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subscription, take } from 'rxjs';
 
 import { MatMenuModule } from '@angular/material/menu';
