@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { Router, RouterModule, Event as NavigationEvent, NavigationEnd } from '@angular/router';
-import { debounceTime, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subscription, take } from 'rxjs';
 
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -60,7 +60,7 @@ import { SelectOption } from './data-access/select-option.interface';
   styles: [
     `
       .filter-form-field {
-        width: 15rem;
+        width: 33%;
       }
 
       .category-input-bar {
@@ -69,7 +69,7 @@ import { SelectOption } from './data-access/select-option.interface';
         margin: 1rem;
 
         .select-btn {
-          min-width: 15rem;
+          min-width: 33%;
           min-height: 3.6rem;
         }
       }
@@ -89,11 +89,12 @@ export class ShellComponent implements OnDestroy {
   ];
 
   selectionForm: FormGroup;
+  selectedCategory = this.categoryOptions[0].value;
 
   constructor() {
     this.selectionForm = new FormGroup({
-      query: new FormControl(''),
-      category: new FormControl(this.categoryOptions[0]),
+      query: new FormControl('', { nonNullable: true }),
+      category: new FormControl(this.categoryOptions[0].value, { nonNullable: true }),
     });
 
     this.router.navigate(['/', 'sports']);
@@ -107,16 +108,37 @@ export class ShellComponent implements OnDestroy {
     );
 
     this.subscriptions.push(
-      this.selectionForm.valueChanges.pipe(debounceTime(500)).subscribe((query) => {
-        console.log(query);
-        // this.sportsDBApiService.fetchSports(query).subscribe();
-      })
+      this.selectionForm
+        .get('query')
+        ?.valueChanges.pipe(debounceTime(500), distinctUntilChanged())
+        .subscribe((query) => {
+          switch (this.selectedCategory) {
+            case 'sports':
+              this.sportsDBApiService.fetchSports(query.trim()).pipe(take(1)).subscribe();
+              this.router.navigate(['/', this.selectedCategory]);
+              break;
+
+            case 'leagues':
+              this.sportsDBApiService.fetchLeagues(query.trim()).pipe(take(1)).subscribe();
+              this.router.navigate(['/', this.selectedCategory]);
+              break;
+
+            case 'countries':
+              this.sportsDBApiService.fetchCountries(query.trim()).pipe(take(1)).subscribe();
+              this.router.navigate(['/', this.selectedCategory]);
+              break;
+
+            default:
+              break;
+          }
+        }) as Subscription
     );
 
     this.subscriptions.push(
       this.selectionForm.get('category')?.valueChanges.subscribe((category) => {
         this.router.navigate(['/', category]);
         this.selectionForm.get('query')?.reset();
+        this.selectedCategory = category;
       }) as Subscription
     );
   }

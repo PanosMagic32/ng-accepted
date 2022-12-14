@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, filter, map, Observable, of, tap } from 'rxjs';
 
 import { BACKEND_URL } from 'src/main';
 import { Sport } from './sport.interface';
@@ -32,14 +32,15 @@ export class SportsDBAPIService {
     return this.httpClient.get<{ sports: Sport[] }>(` ${this.backendURL}/all_sports.php`).pipe(
       map((s) => s.sports),
       tap((sports) => {
-        console.log(sports.filter((x) => x.strSport.includes(query) || x.strSportDescription.includes(query)));
-        // if (query && query !== '') {
-        //   this._sports$.next(sports.filter((x) => x.strSport.includes(query)));
-        // } else {
-        //   this._sports$.next(sports);
-        // }
+        if (query && query !== '') {
+          const filteredSports = sports.filter(
+            (s) => s.strSport?.toLowerCase().includes(query) || s.strSportDescription?.toLowerCase().includes(query)
+          );
 
-        this._sports$.next(sports);
+          this._sports$.next(filteredSports);
+        } else {
+          this._sports$.next(sports);
+        }
 
         return of(true);
       }),
@@ -50,13 +51,19 @@ export class SportsDBAPIService {
     );
   }
 
-  fetchLeagues(): Observable<boolean> {
+  fetchLeagues(query = ''): Observable<boolean> {
     return this.httpClient.get<{ leagues: League[] }>(` ${this.backendURL}/all_leagues.php`).pipe(
       map((l) => l.leagues),
       tap((leagues) => {
-        console.log(leagues);
+        if (query && query !== '') {
+          const filteredLeagues = leagues.filter(
+            (l) => l.strLeague?.toLowerCase().includes(query) || l.strLeagueAlternate?.toLowerCase().includes(query)
+          );
 
-        this._leagues$.next(leagues);
+          this._leagues$.next(filteredLeagues);
+        } else {
+          this._leagues$.next(leagues);
+        }
 
         return of(true);
       }),
@@ -67,13 +74,17 @@ export class SportsDBAPIService {
     );
   }
 
-  fetchCountries(): Observable<boolean> {
+  fetchCountries(query = ''): Observable<boolean> {
     return this.httpClient.get<{ countries: Country[] }>(` ${this.backendURL}/all_countries.php`).pipe(
       map((c) => c.countries),
       tap((countries) => {
-        console.log(countries);
+        if (query && query !== '') {
+          const filteredCountries = countries.filter((c) => c.name_en?.toLowerCase().includes(query));
 
-        this._countries$.next(countries);
+          this._countries$.next(filteredCountries);
+        } else {
+          this._countries$.next(countries);
+        }
 
         return of(true);
       }),
