@@ -5,8 +5,8 @@ import { first } from 'rxjs';
 
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { Sport } from '@shared/data-access/sport.interface';
 import { ThemeToggleService } from '@shared/data-access/theme.service';
+import { Sport } from '@sports/data-access/sport.interface';
 
 @Component({
   selector: 'app-detail-dialog',
@@ -36,13 +36,18 @@ import { ThemeToggleService } from '@shared/data-access/theme.service';
   imports: [NgIf, MatDialogModule],
 })
 export class DetailDialogComponent implements OnInit {
+  // Inject the necessary services & assign them to variables.
   private overlay = inject(OverlayContainer);
   private themeToggleService = inject(ThemeToggleService);
+
+  // Assign the 'isThemeDark' BehaviourSubject to a variable to use it for the dark theme class toggle.
   private isThemeDark$ = this.themeToggleService.isThemeDark$;
 
+  // Inject the data from the Material Dialog display.
   data: Sport = inject(MAT_DIALOG_DATA);
 
   ngOnInit() {
+    // Handle the dark theme class according to the selected theme & apply it to the Material Dialog.
     this.isThemeDark$.pipe(first()).subscribe((isDark) => {
       if (isDark) {
         this.overlay.getContainerElement().classList.add('darkMode');

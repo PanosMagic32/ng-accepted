@@ -77,36 +77,40 @@ import { SelectOption } from './data-access/select-option.interface';
   ],
 })
 export class ShellComponent implements OnDestroy {
+  // Create a Subscriptions array to populate with the bellow subscriptions.
   private subscriptions: Subscription[] = [];
 
+  // Inject the necessary services & assign them to private variables.
   private router = inject(Router);
   private sportsDBApiService = inject(SportsDBAPIService);
 
+  // The 'categoryOptions' array to populate the Material Select.
   categoryOptions: SelectOption[] = [
     { value: 'sports', label: 'Sports' },
     { value: 'leagues', label: 'Leagues' },
     { value: 'countries', label: 'Countries' },
   ];
 
+  // The reactive form to be used for handling the Material Select option and the search input.
   selectionForm: FormGroup;
   selectedCategory = this.categoryOptions[0].value;
 
   constructor() {
+    // The reactive form initialization.
     this.selectionForm = new FormGroup({
       query: new FormControl('', { nonNullable: true }),
       category: new FormControl(this.categoryOptions[0].value, { nonNullable: true }),
     });
 
+    // Apply an initial navigation to the internal router-outlet for the handling of UI's data.
     this.router.navigate(['/', 'sports']);
 
-    this.subscriptions.push(
-      this.router.events.subscribe((event: NavigationEvent) => {
-        if (event instanceof NavigationEnd) {
-          this.selectionForm.get('category')?.setValue(event.url.split('/')[1]);
-        }
-      })
-    );
-
+    /**
+     * Select the 'query' field of the form & subscribe to it's changes.
+     * Check the selected category and apply the query string accordingly.
+     * The use of 'debounceTime' and 'distinctUntilChanged' is to avoid excess use of the search functionality.
+     * The use 'take(1)' operator is to fetch on result from the service's subscription and complete it.
+     */
     this.subscriptions.push(
       this.selectionForm
         .get('query')
@@ -134,6 +138,12 @@ export class ShellComponent implements OnDestroy {
         }) as Subscription
     );
 
+    /**
+     * Select the 'category' field of the form & subscribe to it's changes.
+     * Apply the navigation according to the category selection.
+     * Reset the 'query' field value.
+     * Update the selected category value to be used from other places.
+     */
     this.subscriptions.push(
       this.selectionForm.get('category')?.valueChanges.subscribe((category) => {
         this.router.navigate(['/', category]);
@@ -144,6 +154,7 @@ export class ShellComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    // Unsubscribe the above subscriptions to avoid potential memory leaks.
     if (this.subscriptions.length > 0) {
       this.subscriptions.forEach((s) => s.unsubscribe());
     }

@@ -4,8 +4,8 @@ import { Component, inject, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Sport } from '@shared/data-access/sport.interface';
 import { DetailDialogComponent } from '@shared/detail-dialog/detail-dialog.component';
+import { Sport } from '@sports/data-access/sport.interface';
 
 @Component({
   selector: 'app-sport-item',
@@ -43,10 +43,16 @@ import { DetailDialogComponent } from '@shared/detail-dialog/detail-dialog.compo
   imports: [NgIf, MatCardModule],
 })
 export class SportItemComponent {
+  // The 'sport' input from the parent component's loop.
   @Input() sport!: Sport;
 
+  // Inject the Material's Dialog & assign it to a variable.
   private dialog = inject(MatDialog);
 
+  /**
+   * The function to be called when a 'sport' card is selected.
+   * @param sport The 'sport' model's data.
+   */
   async onSelect(sport: Sport) {
     this.dialog.open(DetailDialogComponent, {
       data: sport,

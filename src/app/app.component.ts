@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -22,10 +22,13 @@ import { HeaderComponent } from './shared/header/header.component';
     </div>
   `,
   styles: [``],
-  imports: [RouterModule, CommonModule, HeaderComponent],
+  imports: [RouterModule, NgClass, AsyncPipe, HeaderComponent],
 })
 export class AppComponent {
+  // Inject the Theme-Toggle service & assign it to a variable.
   themeToggleService = inject(ThemeToggleService);
+
+  // Assign the 'isThemeDark' BehaviourSubject to a variable to use with the async pipe in the template.
   isThemeDark$ = this.themeToggleService.isThemeDark$;
 
   constructor() {

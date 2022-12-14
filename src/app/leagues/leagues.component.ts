@@ -2,8 +2,8 @@ import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
 import { SportsDBAPIService } from '@shared/data-access/sports-db.service';
-import { League } from '@shared/data-access/league.interface';
 
+import { League } from './data-access/league.interface';
 import { LeagueItemComponent } from './ui/league-item.component';
 
 @Component({
@@ -30,9 +30,13 @@ import { LeagueItemComponent } from './ui/league-item.component';
   imports: [NgIf, NgFor, AsyncPipe, LeagueItemComponent],
 })
 export class LeaguesComponent {
+  // Inject the SportsDBAPIService & assign it to a variable.
   sportsDBAPIService = inject(SportsDBAPIService);
+
+  // Assign the 'leagues' Observable to a variable to use with the async pipe in the template.
   leagues$ = this.sportsDBAPIService.leagues$;
 
+  // The trackBy function, for the ngFor loop optimization.
   trackByFN(index: number, league: League) {
     return league.idLeague;
   }

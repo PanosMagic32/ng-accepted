@@ -40,7 +40,10 @@ import { ThemeToggleService } from '../data-access/theme.service';
   ],
 })
 export class HeaderComponent {
+  // Inject the Theme-Toggle service & assign it to a variable.
   themeToggleService = inject(ThemeToggleService);
+
+  // Assign the 'isThemeDark' BehaviourSubject to a variable to use with the async pipe in the template.
   isThemeDark$ = this.themeToggleService.isThemeDark$;
 
   toggleTheme() {

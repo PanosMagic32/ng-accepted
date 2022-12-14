@@ -3,14 +3,14 @@ import { Component, Input } from '@angular/core';
 
 import { MatCardModule } from '@angular/material/card';
 
-import { League } from '@shared/data-access/league.interface';
+import { League } from '@leagues/data-access/league.interface';
 
 @Component({
   selector: 'app-league-item',
   standalone: true,
   template: `
     <ng-container *ngIf="league">
-      <mat-card class="league-item-card" (click)="onSelect(league.idLeague)">
+      <mat-card class="league-item-card">
         <mat-card-content>
           <p>League: {{ league.strLeague }}</p>
 
@@ -33,9 +33,6 @@ import { League } from '@shared/data-access/league.interface';
   imports: [NgIf, MatCardModule],
 })
 export class LeagueItemComponent {
+  // The 'league' input from the parent component's loop.
   @Input() league!: League;
-
-  onSelect(leagueId: string) {
-    console.log(leagueId);
-  }
 }

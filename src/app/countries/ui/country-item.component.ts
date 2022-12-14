@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 
 import { MatCardModule } from '@angular/material/card';
 
-import { Country } from '@shared/data-access/country.interface';
+import { Country } from '@countries/data-access/country.interface';
 
 @Component({
   selector: 'app-country-item',
@@ -29,5 +29,6 @@ import { Country } from '@shared/data-access/country.interface';
   imports: [NgIf, MatCardModule],
 })
 export class CountryItemComponent {
+  // The 'country' input from the parent component's loop.
   @Input() country!: Country;
 }
