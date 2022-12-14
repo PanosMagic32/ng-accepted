@@ -14,6 +14,9 @@ export class SportsDBAPIService {
   backendURL = inject(BACKEND_URL);
   httpClient = inject(HttpClient);
 
+  // Implement loading BehaviourSubject to handle loading spinner for better UX.
+  private _isLoading$ = new BehaviorSubject(false);
+
   /**
    * Make local private variables of the data we retrieve from the API, so that they can be used as a reference
    * for several other places to subscribe to and get updated, as long as for the search funcionality data filtering.
@@ -37,6 +40,10 @@ export class SportsDBAPIService {
     return this._countries$.asObservable();
   }
 
+  get isLoading$() {
+    return this._isLoading$.asObservable();
+  }
+
   /**
    * The HTTP GET call to fetch the 'sports' list.
    * @param query The query string to use for the search funcionality.
@@ -44,6 +51,8 @@ export class SportsDBAPIService {
    * for data prefetching when accessing the 'sports' route, and an error Observable when the HTTP call fails.
    */
   fetchSports(query = ''): Observable<boolean> {
+    this._isLoading$.next(true);
+
     return this.httpClient.get<{ sports: Sport[] }>(` ${this.backendURL}/all_sports.php`).pipe(
       map((s) => s.sports),
       tap((sports) => {
@@ -57,10 +66,13 @@ export class SportsDBAPIService {
           this._sports$.next(sports);
         }
 
+        this._isLoading$.next(false);
+
         return of(true);
       }),
       catchError((e) => {
-        console.error(e);
+        this._isLoading$.next(false);
+
         return of(e);
       })
     );
@@ -73,6 +85,8 @@ export class SportsDBAPIService {
    * for data prefetching when accessing the 'leagues' route, and an error Observable when the HTTP call fails.
    */
   fetchLeagues(query = ''): Observable<boolean> {
+    this._isLoading$.next(true);
+
     return this.httpClient.get<{ leagues: League[] }>(` ${this.backendURL}/all_leagues.php`).pipe(
       map((l) => l.leagues),
       tap((leagues) => {
@@ -86,10 +100,13 @@ export class SportsDBAPIService {
           this._leagues$.next(leagues);
         }
 
+        this._isLoading$.next(false);
+
         return of(true);
       }),
       catchError((e) => {
-        console.error(e);
+        this._isLoading$.next(false);
+
         return of(e);
       })
     );
@@ -102,6 +119,8 @@ export class SportsDBAPIService {
    * for data prefetching when accessing the 'countries' route, and an error Observable when the HTTP call fails.
    */
   fetchCountries(query = ''): Observable<boolean> {
+    this._isLoading$.next(true);
+
     return this.httpClient.get<{ countries: Country[] }>(` ${this.backendURL}/all_countries.php`).pipe(
       map((c) => c.countries),
       tap((countries) => {
@@ -113,10 +132,13 @@ export class SportsDBAPIService {
           this._countries$.next(countries);
         }
 
+        this._isLoading$.next(false);
+
         return of(true);
       }),
       catchError((e) => {
-        console.error(e);
+        this._isLoading$.next(false);
+
         return of(e);
       })
     );
