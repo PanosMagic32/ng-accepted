@@ -6,34 +6,34 @@ settings:
 
 dependencies:
   '@angular/animations':
-    specifier: ^17.1.1
+    specifier: ^17.2.1
     version: 17.2.1(@angular/core@17.2.1)
   '@angular/cdk':
-    specifier: ^17.1.1
+    specifier: ^17.2.0
     version: 17.2.0(@angular/common@17.2.1)(@angular/core@17.2.1)(rxjs@7.8.1)
   '@angular/common':
-    specifier: ^17.1.1
+    specifier: ^17.2.1
     version: 17.2.1(@angular/core@17.2.1)(rxjs@7.8.1)
   '@angular/compiler':
-    specifier: ^17.1.1
+    specifier: ^17.2.1
     version: 17.2.1(@angular/core@17.2.1)
   '@angular/core':
-    specifier: ^17.1.1
+    specifier: ^17.2.1
     version: 17.2.1(rxjs@7.8.1)(zone.js@0.14.4)
   '@angular/forms':
-    specifier: ^17.1.1
+    specifier: ^17.2.1
     version: 17.2.1(@angular/common@17.2.1)(@angular/core@17.2.1)(@angular/platform-browser@17.2.1)(rxjs@7.8.1)
   '@angular/material':
-    specifier: ^17.1.1
+    specifier: ^17.2.0
     version: 17.2.0(@angular/animations@17.2.1)(@angular/cdk@17.2.0)(@angular/common@17.2.1)(@angular/core@17.2.1)(@angular/forms@17.2.1)(@angular/platform-browser@17.2.1)(rxjs@7.8.1)
   '@angular/platform-browser':
-    specifier: ^17.1.1
+    specifier: ^17.2.1
     version: 17.2.1(@angular/animations@17.2.1)(@angular/common@17.2.1)(@angular/core@17.2.1)
   '@angular/platform-browser-dynamic':
-    specifier: ^17.1.1
+    specifier: ^17.2.1
     version: 17.2.1(@angular/common@17.2.1)(@angular/compiler@17.2.1)(@angular/core@17.2.1)(@angular/platform-browser@17.2.1)
   '@angular/router':
-    specifier: ^17.1.1
+    specifier: ^17.2.1
     version: 17.2.1(@angular/common@17.2.1)(@angular/core@17.2.1)(@angular/platform-browser@17.2.1)(rxjs@7.8.1)
   rxjs:
     specifier: ^7.8.1
@@ -42,12 +42,12 @@ dependencies:
     specifier: ^2.6.2
     version: 2.6.2
   zone.js:
-    specifier: ^0.14.2
+    specifier: ^0.14.4
     version: 0.14.4
 
 devDependencies:
   '@angular-devkit/build-angular':
-    specifier: ^17.1.1
+    specifier: ^17.2.0
     version: 17.2.0(@angular/compiler-cli@17.2.1)(karma@6.4.2)(typescript@5.2.2)
   '@angular-eslint/builder':
     specifier: ^17.2.1
@@ -65,26 +65,26 @@ devDependencies:
     specifier: ^17.2.1
     version: 17.2.1(eslint@8.56.0)(typescript@5.2.2)
   '@angular/cli':
-    specifier: ^17.1.1
+    specifier: ^17.2.0
     version: 17.2.0
   '@angular/compiler-cli':
-    specifier: ^17.1.1
+    specifier: ^17.2.1
     version: 17.2.1(@angular/compiler@17.2.1)(typescript@5.2.2)
   '@types/jasmine':
-    specifier: ^4.6.4
-    version: 4.6.4
+    specifier: ^5.1.4
+    version: 5.1.4
   '@typescript-eslint/eslint-plugin':
-    specifier: ^6.16.0
+    specifier: ^6.21.0
     version: 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.56.0)(typescript@5.2.2)
   '@typescript-eslint/parser':
-    specifier: ^6.16.0
+    specifier: ^6.21.0
     version: 6.21.0(eslint@8.56.0)(typescript@5.2.2)
   eslint:
     specifier: ^8.56.0
     version: 8.56.0
   jasmine-core:
-    specifier: ^4.6.0
-    version: 4.6.0
+    specifier: ^5.1.2
+    version: 5.1.2
   karma:
     specifier: ^6.4.2
     version: 6.4.2
@@ -99,7 +99,7 @@ devDependencies:
     version: 5.1.0(karma@6.4.2)
   karma-jasmine-html-reporter:
     specifier: ^2.1.0
-    version: 2.1.0(jasmine-core@4.6.0)(karma-jasmine@5.1.0)(karma@6.4.2)
+    version: 2.1.0(jasmine-core@5.1.2)(karma-jasmine@5.1.0)(karma@6.4.2)
   typescript:
     specifier: ~5.2.2
     version: 5.2.2
@@ -3568,8 +3568,8 @@ packages:
       '@types/node': 20.11.19
     dev: true
 
-  /@types/jasmine@4.6.4:
-    resolution: {integrity: sha512-qCw5sVW+ylTnrEhe5kfX4l6MgU9REXIVDa/lWEcvTOUmd+LqDYwyjovDq+Zk9blElaEHOj1URDQ/djEBVRf+pw==}
+  /@types/jasmine@5.1.4:
+    resolution: {integrity: sha512-px7OMFO/ncXxixDe1zR13V1iycqWae0MxTaw62RpFlksUi5QuNWgQJFkTQjIOvrmutJbI7Fp2Y2N1F6D2R4G6w==}
     dev: true
 
   /@types/json-schema@7.0.15:
@@ -6292,6 +6292,10 @@ packages:
     resolution: {integrity: sha512-O236+gd0ZXS8YAjFx8xKaJ94/erqUliEkJTDedyE7iHvv4ZVqi+q+8acJxu05/WJDKm512EUNn809In37nWlAQ==}
     dev: true
 
+  /jasmine-core@5.1.2:
+    resolution: {integrity: sha512-2oIUMGn00FdUiqz6epiiJr7xcFyNYj3rDcfmnzfkBnHyBQ3cBQUs4mmyGsOb7TTLb9kxk7dBcmEmqhDKkBoDyA==}
+    dev: true
+
   /jest-diff@29.7.0:
     resolution: {integrity: sha512-LMIgiIrhigmPrs03JHpxUh2yISK3vLFPkAodPeo0+BuF7wA2FoQbkEg1u8gBYBThncu7e1oEDUfIXVuTqLRUjw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -6433,14 +6437,14 @@ packages:
       - supports-color
     dev: true
 
-  /karma-jasmine-html-reporter@2.1.0(jasmine-core@4.6.0)(karma-jasmine@5.1.0)(karma@6.4.2):
+  /karma-jasmine-html-reporter@2.1.0(jasmine-core@5.1.2)(karma-jasmine@5.1.0)(karma@6.4.2):
     resolution: {integrity: sha512-sPQE1+nlsn6Hwb5t+HHwyy0A1FNCVKuL1192b+XNauMYWThz2kweiBVW1DqloRpVvZIJkIoHVB7XRpK78n1xbQ==}
     peerDependencies:
       jasmine-core: ^4.0.0 || ^5.0.0
       karma: ^6.0.0
       karma-jasmine: ^5.0.0
     dependencies:
-      jasmine-core: 4.6.0
+      jasmine-core: 5.1.2
       karma: 6.4.2
       karma-jasmine: 5.1.0(karma@6.4.2)
     dev: true
