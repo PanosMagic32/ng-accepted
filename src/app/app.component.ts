@@ -21,7 +21,6 @@ import { HeaderComponent } from './shared/header/header.component';
       <section class="section right"></section>
     </div>
   `,
-  styles: [``],
   imports: [RouterModule, NgClass, AsyncPipe, HeaderComponent],
 })
 export class AppComponent {
